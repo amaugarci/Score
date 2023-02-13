@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:test/views/transfer.dart';
-import 'package:test/views/currency.dart';
-import 'package:test/views/Transaction.dart';
 
 class DashboardScreen extends StatefulWidget {
-  DashboardScreen({Key? key}) {}
+  const DashboardScreen({Key? key}) : super(key: key);
 
   @override
   _DashboardScreenState createState() => _DashboardScreenState();
@@ -12,38 +9,11 @@ class DashboardScreen extends StatefulWidget {
 
 class _DashboardScreenState extends State<DashboardScreen> {
   bool changed = false;
-  int _selectedIndex = 0;
-  String title = "home";
-  final _pageController = PageController(initialPage: 0);
-  final GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
+  String title = "Scoreboard ";
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   void initState() {
     super.initState();
-  }
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-      switch (index) {
-        case 0:
-          setState(() {
-            title = "Current money";
-          });
-          break;
-        case 1:
-          setState(() {
-            title = "Transfer";
-          });
-          break;
-        case 2:
-          setState(() {
-            title = "Transactions";
-          });
-          break;
-      }
-    });
-    _pageController.animateToPage(index,
-        duration: const Duration(microseconds: 300), curve: Curves.easeIn);
   }
 
   @override
@@ -56,30 +26,55 @@ class _DashboardScreenState extends State<DashboardScreen> {
       ),
       backgroundColor: Colors.white,
       key: scaffoldKey,
-      body: PageView(
-        physics: NeverScrollableScrollPhysics(),
-        controller: _pageController,
-        children: [CurrencyScreen(), TransferScreen(), TransactionScreen()],
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.money),
-            label: 'Current money',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.transform),
-            label: 'Transfer',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.history),
-            label: 'Transactions',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.amber[800],
-        onTap: _onItemTapped,
-      ),
+      body: Container(
+        padding: const EdgeInsets.symmetric(horizontal:40),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            GestureDetector(
+              onTap: () {
+                Navigator.pushNamed(context, "/match");
+              },
+              child: Container(
+                width: double.infinity,
+                height: 50,
+                decoration: BoxDecoration(
+                  border: Border.all(color: const Color(0xFFD2D2D4), width: 1),
+                  borderRadius: BorderRadius.circular(3.0),
+                  color: Colors.blue
+                ),
+                child:const Align(
+                  alignment: Alignment.center,
+                  child: Text('New Match',
+                    style: TextStyle(color: Colors.white,fontWeight: FontWeight.w400,fontSize: 14),
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 30,),
+            GestureDetector(
+              onTap: () {
+                Navigator.pushNamed(context, "/setting");
+              },
+              child: Container(
+                width: double.infinity,
+                height: 50,
+                decoration: BoxDecoration(
+                  border: Border.all(color: const Color(0xFFD2D2D4), width: 1),
+                  borderRadius: BorderRadius.circular(3.0),
+                  color: Colors.blue
+                ),
+                child:const Align(
+                  alignment: Alignment.center,
+                  child: Text('Setting',
+                    style: TextStyle(color: Colors.white,fontWeight: FontWeight.w400,fontSize: 14),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      )
     );
   }
 }

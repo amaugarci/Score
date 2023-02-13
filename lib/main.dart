@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter/services.dart';
+import 'package:test/provider/setting_provider.dart';
 import 'package:test/routes.dart';
-
+import 'package:provider/provider.dart';
 Future<void> main() async {
   await dotenv.load();
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(MyApp());
+  runApp(MultiProvider(providers: [ChangeNotifierProvider<SettingProvider>.value(value: SettingProvider()),],child: MyApp(),));
 }
 
 class MyApp extends StatefulWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
   _MyAppState createState() => _MyAppState();
 }
@@ -28,6 +31,8 @@ class _MyAppState extends State<MyApp> {
         brightness: Brightness.light,
         primaryColor: Colors.grey,
         focusColor: Colors.blue,
+        unselectedWidgetColor: Colors.grey,
+        disabledColor: Colors.blue,
         fontFamily: 'Georgia',
         textTheme: const TextTheme(
           headline1: TextStyle(fontSize: 72.0, fontWeight: FontWeight.bold),
@@ -37,7 +42,7 @@ class _MyAppState extends State<MyApp> {
       ),
       title: "Test",
       debugShowCheckedModeBanner: false,
-      initialRoute: '/login',
+      initialRoute: '/index',
       onGenerateRoute: RouteGenerator.generateRoute,
     );
   }

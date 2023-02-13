@@ -42,6 +42,8 @@ dependencies:
   path_provider: ^2.0.9
   shared_preferences: ^2.0.15
   dropdown_button2: ^1.4.0
+  provider: ^6.0.5
+  numberpicker: ^2.1.1
 
 dev_dependencies:
   flutter_test:
