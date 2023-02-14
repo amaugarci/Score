@@ -302,6 +302,8 @@ class _ScoreScreenState extends State<ScoreScreen> {
                   const SizedBox(height: 20,),
                   GestureDetector(
                     onTap: () {
+                      settingProvider.setPlayerNumber(_currentPlayerCount);
+                      settingProvider.setBestOfNumber(_round);
                       Navigator.pushNamed(context, "/score");
                     },
                     child: Container(

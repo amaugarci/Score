@@ -5,6 +5,8 @@ class SettingProvider extends ChangeNotifier {
   int maxPlayerCount=3;
   bool winnerByTwo=true;
   bool winnerServe=true;
+  int playerNumber=2;
+  ROUND bestOfNumber=ROUND.one;
    get gettitlet => title;
   void setTitle(String value) {
     title = value;
@@ -23,6 +25,16 @@ class SettingProvider extends ChangeNotifier {
   get getwinnerServe => winnerServe;
   void setWinnerServe(bool value) {
     winnerServe = value;
+    notifyListeners();
+  }
+  get getPlayerNumber => playerNumber;
+  void setPlayerNumber(int value) {
+    playerNumber = value;
+    notifyListeners();
+  }
+  get getBestOfNumber => bestOfNumber;
+  void setBestOfNumber(ROUND value) {
+    bestOfNumber = value;
     notifyListeners();
   }
 }
