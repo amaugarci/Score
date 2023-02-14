@@ -1,19 +1,21 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:numberpicker/numberpicker.dart';
+import 'package:provider/provider.dart';
+import 'package:test/common/helper.dart';
+import 'package:test/provider/setting_provider.dart';
+import 'package:test/views/widget/CheckboxButton.dart';
 
 class RegistrationScreen extends StatefulWidget {
   @override
   _RegistrationScreenState createState() => _RegistrationScreenState();
 }
-enum PLAYER {
-  multi,
-  two,
-}
 class _RegistrationScreenState extends State<RegistrationScreen> {
   late Timer _timer;
   late DateTime? _dateTime;
-  PLAYER _playerCount = PLAYER.two;
+  late int maxPlayerCount;
+  late bool isfirst=true,winnerByTwo,winnerServe;
   @override
   void initState() {
     super.initState();
@@ -35,6 +37,16 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   }
   @override
   Widget build(BuildContext context) {
+    SettingProvider settingProvider =
+        Provider.of<SettingProvider>(context, listen: true);
+    if(isfirst){
+      setState(() {
+        maxPlayerCount=settingProvider.maxPlayerCount;
+        winnerByTwo=settingProvider.winnerByTwo;
+        winnerServe=settingProvider.winnerServe;
+        isfirst=false;
+      });
+    }
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -69,12 +81,22 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 children: [
                   const Text('Settings'),
                   Row(
-                    children: const [
-                      Text('Max Number of players'),
-                      SizedBox(
+                    children: [
+                      const Text('Max Number of players'),
+                      const SizedBox(
                         width: 20,
                       ),
-                      Text('2'),
+                      NumberPicker(
+                        value: maxPlayerCount,
+                        itemCount: 1,
+                        minValue: 2,
+                        maxValue: 10,
+                        onChanged: (value) {
+                          setState(() {
+                            maxPlayerCount=value;
+                          });
+                        },
+                      ),
                     ],
                   ),
                   Container(
@@ -84,41 +106,28 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           const Text('Winner by Two'),
-                          Container(
-                            width: 20,
-                            height: 20,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(10)),
-                            child: Radio(
-                                value: PLAYER.two,
-                                groupValue: _playerCount,
-                                onChanged: (PLAYER? value) {
-                                  setState(() {
-                                    _playerCount = value!;
-                                  });
-                                }),
+                          CheckboxButton(
+                            currentstatus: winnerByTwo,
+                            onPressed: (){
+                              setState(() {
+                                winnerByTwo=!winnerByTwo;
+                              });
+                            },
                           ),
                         ],
                       ),
+                      const SizedBox(height: 20,),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           const Text('Winner Serve'),
-                          Container(
-                            width: 20,
-                            height: 20,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(10)),
-                            child: Radio(
-                                value: PLAYER.multi,
-                                groupValue: _playerCount,
-                                onChanged: (PLAYER? value) {
-                                  setState(() {
-                                    _playerCount = value!;
-                                  });
-                                }),
+                          CheckboxButton(
+                            currentstatus: winnerServe,
+                            onPressed: (){
+                              setState(() {
+                                winnerServe=!winnerServe;
+                              });
+                            },
                           ),
                         ],
                       ),
@@ -126,7 +135,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      // Navigator.pushNamed(context, "/setting");
+                      settingProvider.setWinnerByTwo(winnerByTwo);
+                      settingProvider.setWinnerServe(winnerServe);
+                      settingProvider.setMaxPlayerCount(maxPlayerCount);
                     },
                     child: Container(
                       width: double.infinity,

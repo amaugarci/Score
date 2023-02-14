@@ -32,7 +32,7 @@ class _CheckboxButtonState extends State<CheckboxButton>
           height: 15,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10.0),
-            color: widget.currentstatus?Colors.blue:Colors.grey),
+            color: widget.currentstatus?Colors.blue:Colors.white),
         ),
       ),
     );

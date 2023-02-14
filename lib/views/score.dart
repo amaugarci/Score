@@ -8,14 +8,14 @@ import 'package:test/common/helper.dart';
 import 'package:test/provider/setting_provider.dart';
 import 'package:test/views/widget/CheckboxButton.dart';
 
-class MatchScreen extends StatefulWidget {
-  const MatchScreen({Key? key}) : super(key: key);
+class ScoreScreen extends StatefulWidget {
+  const ScoreScreen({Key? key}) : super(key: key);
 
   @override
-  _MatchScreenState createState() => _MatchScreenState();
+  _ScoreScreenState createState() => _ScoreScreenState();
 }
 
-class _MatchScreenState extends State<MatchScreen> {
+class _ScoreScreenState extends State<ScoreScreen> {
   late TextEditingController controller;
   late Timer _timer;
   late DateTime? _dateTime;

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:test/common/helper.dart';
 class SettingProvider extends ChangeNotifier {
-  String title='score title';
+  String title='basketball';
   int maxPlayerCount=3;
   bool winnerByTwo=true;
   bool winnerServe=true;
