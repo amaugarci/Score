@@ -20,7 +20,7 @@ class _MatchScreenState extends State<MatchScreen> {
   late Timer _timer;
   late DateTime? _dateTime;
   PLAYER _playerCount = PLAYER.two;
-  ROUND _round = ROUND.two;
+  int _round = 1;
   int _currentPlayerCount = 2, _point = 11;
   late String title;
   bool isfirst=true;
@@ -103,9 +103,9 @@ class _MatchScreenState extends State<MatchScreen> {
                         maxValue: settingProvider.maxPlayerCount,
                         onChanged: (value) {
                           if (value == 2) {
-                            _playerCount = PLAYER.multi;
-                          } else {
                             _playerCount = PLAYER.two;
+                          } else {
+                            _playerCount = PLAYER.multi;
                           }
                           setState(() => _currentPlayerCount = value);
                         },
@@ -158,7 +158,7 @@ class _MatchScreenState extends State<MatchScreen> {
                     ],
                   ),
                   const SizedBox(height: 20,),
-                  Row(
+                  _currentPlayerCount!=2?Container() :Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Column(
@@ -171,9 +171,9 @@ class _MatchScreenState extends State<MatchScreen> {
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(10)),
                             child: Radio(
-                                value: ROUND.one,
+                                value: 1,
                                 groupValue: _round,
-                                onChanged: (ROUND? value) {
+                                onChanged: (int? value) {
                                   setState(() {
                                     _round = value!;
                                   });
@@ -191,9 +191,9 @@ class _MatchScreenState extends State<MatchScreen> {
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(10)),
                             child: Radio(
-                                value: ROUND.two,
+                                value: 2,
                                 groupValue: _round,
-                                onChanged: (ROUND? value) {
+                                onChanged: (int? value) {
                                   setState(() {
                                     _round = value!;
                                   });
@@ -211,9 +211,9 @@ class _MatchScreenState extends State<MatchScreen> {
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(10)),
                             child: Radio(
-                                value: ROUND.three,
+                                value: 3,
                                 groupValue: _round,
-                                onChanged: (ROUND? value) {
+                                onChanged: (int? value) {
                                   setState(() {
                                     _round = value!;
                                   });
@@ -302,7 +302,14 @@ class _MatchScreenState extends State<MatchScreen> {
                   const SizedBox(height: 20,),
                   GestureDetector(
                     onTap: () {
-                      Navigator.pushNamed(context, "/score");
+                      settingProvider.setPlayerNumber(_currentPlayerCount);
+                      settingProvider.setBestOfNumber(_round);
+                      settingProvider.setPonts(_point);
+                      if(_currentPlayerCount==2){
+                        Navigator.pushNamed(context, "/twoscore");
+                      }else{
+                        Navigator.pushNamed(context, "/multiscore");
+                      }
                     },
                     child: Container(
                       width: double.infinity,
@@ -339,6 +346,7 @@ class _MatchScreenState extends State<MatchScreen> {
                             fontSize: 20)),
                     child: const Text('Setting'),
                     onPressed: () {
+                      Navigator.pop(context);
                       Navigator.pushNamed(context, "/setting");
                     },
                   )),

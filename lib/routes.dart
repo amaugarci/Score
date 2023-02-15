@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:test/views/dashboard.dart';
 import 'package:test/views/match.dart';
-import 'package:test/views/score.dart';
+import 'package:test/views/multiscore.dart';
+import 'package:test/views/twoscore.dart';
 import 'package:test/views/setting.dart';
 
 class RouteGenerator {
@@ -13,8 +14,10 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const MatchScreen());
       case '/setting':
         return MaterialPageRoute(builder: (_) => RegistrationScreen());
-      case '/score':
-        return MaterialPageRoute(builder: (_) => const ScoreScreen());
+      case '/twoscore':
+        return MaterialPageRoute(builder: (_) => const TwoScoreScreen());
+      case '/multiscore':
+        return MaterialPageRoute(builder: (_) => const MultiScoreScreen());
       default:
         return MaterialPageRoute(builder: (_) => const DashboardScreen());
     }

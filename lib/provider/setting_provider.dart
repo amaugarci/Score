@@ -6,7 +6,8 @@ class SettingProvider extends ChangeNotifier {
   bool winnerByTwo=true;
   bool winnerServe=true;
   int playerNumber=2;
-  ROUND bestOfNumber=ROUND.one;
+  int bestOfNumber=1;
+  int points=11;
    get gettitlet => title;
   void setTitle(String value) {
     title = value;
@@ -33,8 +34,14 @@ class SettingProvider extends ChangeNotifier {
     notifyListeners();
   }
   get getBestOfNumber => bestOfNumber;
-  void setBestOfNumber(ROUND value) {
+  void setBestOfNumber(int value) {
     bestOfNumber = value;
     notifyListeners();
   }
+  get getPoints => points;
+  void setPonts(int value) {
+    points = value;
+    notifyListeners();
+  }
+  
 }

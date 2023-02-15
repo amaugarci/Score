@@ -138,6 +138,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       settingProvider.setWinnerByTwo(winnerByTwo);
                       settingProvider.setWinnerServe(winnerServe);
                       settingProvider.setMaxPlayerCount(maxPlayerCount);
+                      Navigator.pop(context);
+                      Navigator.pushNamed(context, "/match");
                     },
                     child: Container(
                       width: double.infinity,
@@ -174,6 +176,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                             fontSize: 20)),
                     child: const Text('Home'),
                     onPressed: () {
+                      Navigator.pop(context);
                       Navigator.pushNamed(context, "/match");
                     },
                   )),
