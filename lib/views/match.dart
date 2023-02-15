@@ -191,7 +191,7 @@ class _MatchScreenState extends State<MatchScreen> {
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(10)),
                             child: Radio(
-                                value: 2,
+                                value: 3,
                                 groupValue: _round,
                                 onChanged: (int? value) {
                                   setState(() {
@@ -211,7 +211,7 @@ class _MatchScreenState extends State<MatchScreen> {
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(10)),
                             child: Radio(
-                                value: 3,
+                                value: 5,
                                 groupValue: _round,
                                 onChanged: (int? value) {
                                   setState(() {
