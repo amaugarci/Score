@@ -23,7 +23,7 @@ class _TwoScoreScreenState extends State<TwoScoreScreen> {
   List<int> mark=[0,0];
   List<List<int>> result=[];
   List<int> finalResult=[0,0];
-  bool isServeLeft=true;
+  bool isServeLeft=true, isEnd=false;
   late int bestOfNumber;
   late Timer _timer;
   int currentRound=0;
@@ -48,7 +48,6 @@ class _TwoScoreScreenState extends State<TwoScoreScreen> {
     if(mark.any((element) => element>=11)){
       if(winnerByTwo){
         if((mark[0]-mark[1]).abs()>=2){
-          
           setState(() {
             if(mark[0]>mark[1]){
               finalResult[0]++;
@@ -59,8 +58,9 @@ class _TwoScoreScreenState extends State<TwoScoreScreen> {
             result[1].add(mark[1]);
             currentRound++;
             mark=[0,0];
-            if(finalResult.any((element) => element==bestOfNumber)){
-               showVictoryDialog(finalResult[0]==bestOfNumber?player1.text:player2.text);
+            if(finalResult.any((element) => element>=bestOfNumber)){
+               isEnd=true;
+               showVictoryDialog(finalResult[0]>=bestOfNumber?player1.text:player2.text);
             }
           });
         }
@@ -279,9 +279,11 @@ class _TwoScoreScreenState extends State<TwoScoreScreen> {
                             children: [
                               InkWell(
                                 onTap: (){
+                                  if(!isEnd){
                                     setState(() {
-                                      isServeLeft=true;
-                                    });
+                                    isServeLeft=true;
+                                  });
+                                  }
                                 },
                                 child: Container(
                                   margin: const EdgeInsets.all(5),
@@ -313,7 +315,9 @@ class _TwoScoreScreenState extends State<TwoScoreScreen> {
                           children: [
                             InkWell(
                               onTap: (){
-                                increase(0,settingProvider.winnerServe, settingProvider.winnerByTwo);
+                                if(!isEnd){
+                                  increase(0,settingProvider.winnerServe, settingProvider.winnerByTwo);
+                                }
                               },
                               child: Container(
                                 width: 60,
@@ -330,7 +334,9 @@ class _TwoScoreScreenState extends State<TwoScoreScreen> {
                             const SizedBox(width: 10,),
                             InkWell(
                               onTap: (){
-                                decrease(0,settingProvider.winnerServe,settingProvider.winnerByTwo);
+                                if(!isEnd){
+                                  decrease(0,settingProvider.winnerServe,settingProvider.winnerByTwo);
+                                }
                               },
                               child: Container(
                                 width: 50,
@@ -392,9 +398,11 @@ class _TwoScoreScreenState extends State<TwoScoreScreen> {
                             children: [
                               InkWell(
                                 onTap: (){
+                                  if(!isEnd){
                                     setState(() {
-                                      isServeLeft=false;
-                                    });
+                                    isServeLeft=false;
+                                  });
+                                  }
                                 },
                                 child: Container(
                                   margin: const EdgeInsets.all(5),
@@ -426,7 +434,9 @@ class _TwoScoreScreenState extends State<TwoScoreScreen> {
                           children: [
                             InkWell(
                               onTap: (){
-                                decrease(1,settingProvider.winnerServe,settingProvider.winnerByTwo);
+                                if(!isEnd){
+                                  decrease(1,settingProvider.winnerServe,settingProvider.winnerByTwo);
+                                }
                               },
                               child: Container(
                                 width: 50,
@@ -444,7 +454,9 @@ class _TwoScoreScreenState extends State<TwoScoreScreen> {
                             const SizedBox(width: 10,),
                             InkWell(
                               onTap: (){
-                                increase(1,settingProvider.winnerServe,settingProvider.winnerByTwo);
+                                if(!isEnd){
+                                  increase(1,settingProvider.winnerServe,settingProvider.winnerByTwo);
+                                }
                               },
                               child: Container(
                                 width: 60,
