@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:provider/provider.dart';
@@ -12,6 +13,7 @@ class RegistrationScreen extends StatefulWidget {
   _RegistrationScreenState createState() => _RegistrationScreenState();
 }
 class _RegistrationScreenState extends State<RegistrationScreen> {
+  final List<int> players=[2,3,4,5,6,7,8,9,10];
   late Timer _timer;
   late DateTime? _dateTime;
   late int maxPlayerCount;
@@ -86,17 +88,50 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       const SizedBox(
                         width: 20,
                       ),
-                      NumberPicker(
-                        value: maxPlayerCount,
-                        itemCount: 1,
-                        minValue: 2,
-                        maxValue: 10,
-                        onChanged: (value) {
-                          setState(() {
-                            maxPlayerCount=value;
-                          });
-                        },
-                      ),
+                       Center(
+                          child: DropdownButtonHideUnderline(
+                              child: DropdownButton2(
+                                value: maxPlayerCount,
+                                buttonHeight: 30,
+                                buttonWidth: 80,
+                                onChanged: (value) {
+                                  setState(() {
+                                    maxPlayerCount = value as int;
+                                  });
+                                },
+                                icon: Container(),
+                                buttonElevation: 2,
+                                buttonPadding: const EdgeInsets.only(left: 25),
+                                itemHeight: 30,
+                                dropdownMaxHeight: 200,
+                                dropdownWidth: 80,
+                                dropdownPadding: null,
+                                dropdownDecoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(14),
+                                  color: const Color(0xFF9AEAFF),
+                                ),
+                                dropdownElevation: 8,
+                                scrollbarRadius: const Radius.circular(40),
+                                scrollbarThickness: 6,
+                                scrollbarAlwaysShow: true,
+                                items: players
+                                .map((item) =>
+                                  DropdownMenuItem<int>(
+                                    value: item,
+                                    child: Text(
+                                      item.toString(),
+                                      style: const TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.blue,
+                                      ),
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ))
+                                  .toList(),
+                                ),
+                            ),
+                        )
                     ],
                   ),
                   Container(
